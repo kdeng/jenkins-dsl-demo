@@ -1,17 +1,37 @@
+import groovy.json.JsonSlurper
+
+String basePath = "jenkins-demo"
+
 def gitUrl = 'git@github.com:kdeng/jenkins-app-demo.git'
 def project = 'kdeng/jenkins-app-demo'
-def branchApi = new URL("https://api.github.com/repos/${project}/branches")
-def branches = new groovy.json.JsonSlurper().parse(branchApi.newReader())
+URL branchApi = new URL("https://api.github.com/repos/${project}/branches")
+List branches = new JsonSlurper().parse(branchApi.newReader())
 
-branches.each {
-    def branchName = it.name
-    def jobName = "${project}-${branchName}".replaceAll('/','-')
-    job(jobName) {
+folder(basePath) {
+    description 'This shows how to crate a set of jobs for each github branch, each in its own folder.'
+}
+
+branches.each { branch ->
+    String safeBranchName = branch.name.replaceAll('/', '-')
+    
+    folder "$basePath/$safeBranchName"
+
+    String jobName = "$basePath/$safeBranchName/${project}-${safeBranchName}"
+
+    job("$jobName/build") {
         scm {
-            git("git://github.com/${project}.git", branchName)
+            git("git://github.com/${project}.git", branch.name)
         }
         steps {
             maven("test -Dproject.name=${project}/${branchName}")
+        }
+    }
+    job("$jobName/deploy") {
+        parameters {
+            stringParam 'host'
+        }
+        steps {
+            shell 'scp war file; restart...'
         }
     }
 }
