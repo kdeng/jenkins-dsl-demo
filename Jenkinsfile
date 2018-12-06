@@ -1,1 +1,1 @@
-jobDsl ignoreExisting: true, sandbox: true, targets: 'jobs/**/*.groovy'
+jobDsl ignoreExisting: true, sandbox: true, targets: 'src/jobs/**/*.groovy'
