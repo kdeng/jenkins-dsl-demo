@@ -12,6 +12,8 @@
 
 
 node {
+    jobDsl scriptText: 'job("example-2")'
+    
     jobDsl  ignoreExisting: true,
             sandbox: true,
             targets: 'src/jobs/job1.groovy',
