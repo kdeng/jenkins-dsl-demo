@@ -14,9 +14,9 @@
 node {
     // jobDsl scriptText: 'job("example-2")'
 
-    jobDsl  ignoreExisting: true,
+    jobDsl  targets: ['./src/jobs/job1.groovy', '**/job1.groovy'].join('\n'),
+            // ignoreExisting: true,
             // sandbox: true,
-            targets: ['./src/jobs/job1.groovy', '**/job1.groovy'].join('\n'),
             removedJobAction: 'DELETE',
             removedViewAction: 'DELETE',
             lookupStrategy: 'SEED_JOB',
