@@ -13,7 +13,7 @@ folder(basePath) {
 
 branches.each { branch ->
     String safeBranchName = branch.name.replaceAll('/', '-')
-    
+
     folder "$basePath/$safeBranchName"
 
     String jobName = "$basePath/$safeBranchName/${project}-${safeBranchName}"
@@ -31,7 +31,7 @@ branches.each { branch ->
             stringParam 'host'
         }
         steps {
-            shell 'scp war file; restart...'
+            shell 'echo hello'
         }
     }
 }
