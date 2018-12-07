@@ -13,19 +13,19 @@ folder(basePath) {
 
 branches.each { branch ->
     String safeBranchName = branch.name.replaceAll('/', '-')
+    String jobName = "$basePath/$safeBranchName"
 
-    folder "$basePath/$safeBranchName"
-
-    String jobName = "$basePath/$safeBranchName/${project}-${safeBranchName}"
+    folder "$jobName"
 
     job("$jobName/build") {
         scm {
             git("git://github.com/${project}.git", branch.name)
         }
         steps {
-            maven("test -Dproject.name=${project}/${safeBranchName}")
+            maven("test -Dproject.name=${project}/${safeBranchName} -Dversion=${GIT_BRANCH}-${BUILD_NUMBER}")
         }
     }
+
     job("$jobName/deploy") {
         parameters {
             stringParam 'host'
@@ -34,6 +34,7 @@ branches.each { branch ->
             shell 'echo hello "${BUILD_NUMBER}" "${GIT_BRANCH}"'
         }
     }
+
 }
 // job('PROJ-sonar') {
 //     scm {
