@@ -14,7 +14,7 @@
 node {
     // jobDsl scriptText: 'job("example-2")'
 
-    jobDsl  targets: ['./src/jobs/job1.groovy', '**/job1.groovy'].join('\n'),
+    jobDsl  targets: ['./src/**/*.groovy'].join('\n'),
             // ignoreExisting: true,
             // sandbox: true,
             removedJobAction: 'DELETE',
