@@ -18,7 +18,7 @@ node {
     }
 
     stage('Build') {
-        jobDsl  targets: ['./src/**/*.groovy'].join('\n'),
+        jobDsl  targets: ['./src/jobs/*.groovy'].join('\n'),
                 // ignoreExisting: true,
                 // sandbox: true,
                 removedJobAction: 'DELETE',

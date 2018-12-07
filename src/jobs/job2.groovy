@@ -23,7 +23,7 @@ branches.each { branch ->
             git("git://github.com/${project}.git", branch.name)
         }
         steps {
-            maven("test -Dproject.name=${project}/${branchName}")
+            maven("test -Dproject.name=${project}/${safeBranchName}")
         }
     }
     job("$jobName/deploy") {
@@ -31,7 +31,7 @@ branches.each { branch ->
             stringParam 'host'
         }
         steps {
-            shell 'echo hello'
+            shell 'echo hello "${BUILD_NUMBER}" "${GIT_BRANCH}"'
         }
     }
 }
