@@ -15,29 +15,46 @@ branches.each { branch ->
     String safeBranchName = branch.name.replaceAll('/', '-')
     String jobName = "$basePath/$safeBranchName"
 
-    folder "$jobName"
+    folder "$basePath"
 
-    job("$jobName/build") {
-        scm {
-            git("git://github.com/${project}.git", branch.name)
+    pipelineJob("$jobName") {
+
+        description("Pipeline for $project-${branch.name}")
+
+        definition {
+            cpsScm {
+                scm {
+                    git {
+                      remote { url("git://github.com/${project}.git") }
+                      branches(branch.name)
+                      scriptPath('Jenkinsfile')
+                      extensions { }  // required as otherwise it may try to tag the repo, which you may not want
+                    }
+                }
+            }
         }
-        steps {
-            // GIT_BRANCH_LOCAL = sh (
-            //     script: "git rev-parse --abbrev-ref HEAD",
-            //     returnStdout: true
-            // ).trim()
-            // echo "Git branch: ${GIT_BRANCH_LOCAL}"
-            maven("test -Dproject.name=${project}/${safeBranchName} -Dversion=\"${BUILD_NUMBER}\"")
-        }
+
+
+        // scm {
+        //     git("git://github.com/${project}.git", branch.name)
+        // }
+        // steps {
+        //     // GIT_BRANCH_LOCAL = sh (
+        //     //     script: "git rev-parse --abbrev-ref HEAD",
+        //     //     returnStdout: true
+        //     // ).trim()
+        //     // echo "Git branch: ${GIT_BRANCH_LOCAL}"
+        //     maven("test -Dproject.name=${project}/${safeBranchName} -Dversion=\"${BUILD_NUMBER}\"")
+        // }
     }
 
-    job("$jobName/deploy") {
-        parameters {
-            stringParam 'host'
-        }
-        steps {
-            shell 'echo hello "${BUILD_NUMBER}"'
-        }
-    }
+    // job("$jobName/deploy") {
+    //     parameters {
+    //         stringParam 'host'
+    //     }
+    //     steps {
+    //         shell 'echo hello "${BUILD_NUMBER}"'
+    //     }
+    // }
 
 }
