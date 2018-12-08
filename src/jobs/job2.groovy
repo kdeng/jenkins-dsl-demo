@@ -22,7 +22,12 @@ branches.each { branch ->
             git("git://github.com/${project}.git", branch.name)
         }
         steps {
-            maven("test -Dproject.name=${project}/${safeBranchName} -Dversion=\"${GIT_BRANCH}\"-\"${BUILD_NUMBER}\"")
+            GIT_BRANCH_LOCAL = sh (
+                script: "echo $Branch | sed -e 's|origin/||g'",
+                returnStdout: true
+            ).trim()
+            echo "Git branch: ${GIT_BRANCH_LOCAL}"
+            maven("test -Dproject.name=${project}/${safeBranchName} -Dversion=\"${GIT_BRANCH_LOCAL}\"-\"${BUILD_NUMBER}\"")
         }
     }
 
@@ -31,47 +36,8 @@ branches.each { branch ->
             stringParam 'host'
         }
         steps {
-            shell 'echo hello "${BUILD_NUMBER}" "${GIT_BRANCH}"'
+            shell 'echo hello "${BUILD_NUMBER}"'
         }
     }
 
 }
-// job('PROJ-sonar') {
-//     scm {
-//         git(gitUrl)
-//     }
-//     triggers {
-//         cron('15 13 * * *')
-//     }
-//     steps {
-//         maven('sonar:sonar')
-//     }
-// }
-
-// job('PROJ-integration-tests') {
-//     scm {
-//         git(gitUrl)
-//     }
-//     triggers {
-//         cron('15 1,13 * * *')
-//     }
-//     steps {
-//         maven('-e clean integration-test')
-//     }
-// }
-
-// job('PROJ-release') {
-//     scm {
-//         git(gitUrl)
-//     }
-//     // no trigger
-//     authorization {
-//         // limit builds to just Jack and Jill
-//         permission('hudson.model.Item.Build', 'jill')
-//         permission('hudson.model.Item.Build', 'jack')
-//     }
-//     steps {
-//         maven('-B release:prepare release:perform')
-//         shell('cleanup.sh')
-//     }
-// }
