@@ -22,12 +22,12 @@ branches.each { branch ->
             git("git://github.com/${project}.git", branch.name)
         }
         steps {
-            GIT_BRANCH_LOCAL = sh (
-                script: "git rev-parse --abbrev-ref HEAD",
-                returnStdout: true
-            ).trim()
-            echo "Git branch: ${GIT_BRANCH_LOCAL}"
-            maven("test -Dproject.name=${project}/${safeBranchName} -Dversion=\"${GIT_BRANCH_LOCAL}\"-\"${BUILD_NUMBER}\"")
+            // GIT_BRANCH_LOCAL = sh (
+            //     script: "git rev-parse --abbrev-ref HEAD",
+            //     returnStdout: true
+            // ).trim()
+            // echo "Git branch: ${GIT_BRANCH_LOCAL}"
+            maven("test -Dproject.name=${project}/${safeBranchName} -Dversion=\"${BUILD_NUMBER}\"")
         }
     }
 
