@@ -23,7 +23,7 @@ branches.each { branch ->
         }
         steps {
             GIT_BRANCH_LOCAL = sh (
-                script: "echo $Branch | sed -e 's|origin/||g'",
+                script: "git rev-parse --abbrev-ref HEAD",
                 returnStdout: true
             ).trim()
             echo "Git branch: ${GIT_BRANCH_LOCAL}"
