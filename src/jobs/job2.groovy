@@ -23,14 +23,18 @@ branches.each { branch ->
 
         definition {
             cpsScm {
-                scm {
-                    git {
-                      remote { url("git://github.com/${project}.git") }
-                      branch('master')
-                      scriptPath('Jenkinsfile')
-                      extensions { }  // required as otherwise it may try to tag the repo, which you may not want
+              lightweight(true)
+              scriptPath('Jenkinsfile')
+              scm {
+                  git {
+                    branches('master')
+                    remote {
+                      url("git://github.com/${project}.git")
                     }
-                }
+                    extensions {
+                    }  // required as otherwise it may try to tag the repo, which you may not want
+                  }
+              }
             }
         }
 
