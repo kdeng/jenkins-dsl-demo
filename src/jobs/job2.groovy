@@ -27,7 +27,7 @@ branches.each { branch ->
               scriptPath('Jenkinsfile')
               scm {
                   git {
-                    branches('master')
+                    branch("master")
                     remote {
                       url("git://github.com/${project}.git")
                     }
