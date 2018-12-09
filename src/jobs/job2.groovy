@@ -26,7 +26,7 @@ branches.each { branch ->
                 scm {
                     git {
                       remote { url("git://github.com/${project}.git") }
-                      branches(branch.name)
+                      branch(branch.name)
                       scriptPath('Jenkinsfile')
                       extensions { }  // required as otherwise it may try to tag the repo, which you may not want
                     }
