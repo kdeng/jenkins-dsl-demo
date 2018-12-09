@@ -11,15 +11,15 @@ folder(basePath) {
     description 'This shows how to crate a set of jobs for each github branch, each in its own folder.'
 }
 
-branches.each { branch ->
-    String safeBranchName = branch.name.replaceAll('/', '-')
+branches.each { branchItem ->
+    String safeBranchName = branchItem.name.replaceAll('/', '-')
     String jobName = "$basePath/$safeBranchName"
 
     folder "$basePath"
 
     pipelineJob("$jobName") {
 
-        description("Pipeline for $project-${branch.name}")
+        description("Pipeline for $project-${branchItem.name}")
 
         definition {
             cpsScm {
@@ -27,7 +27,7 @@ branches.each { branch ->
               scriptPath('Jenkinsfile')
               scm {
                   git {
-                    branches("master", "feature")
+                    branch("master")
                     remote {
                       url("git://github.com/${project}.git")
                     }
