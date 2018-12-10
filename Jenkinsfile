@@ -34,7 +34,7 @@
 //     hello("ryan")
 //   }
 // }
-
+@Library('my-dsl-lib') _
 hello()
 hello('ryan')
 
