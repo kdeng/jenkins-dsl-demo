@@ -35,17 +35,16 @@
 //   }
 // }
 @Library('my-dsl-lib') _
-hello()
-hello('ryan')
+// hello()
+// hello('ryan')
 
-// pipeline {
-//   agent none
-//   stages {
-//     stage('Test') {
-//       steps {
-//         hello()
-//         hello('ryan')
-//       }
-//     }
-//   }
-// }
+pipeline {
+  agent none
+
+  stage('Test') {
+    steps {
+      hello()
+      hello('ryan')
+    }
+  }
+}
