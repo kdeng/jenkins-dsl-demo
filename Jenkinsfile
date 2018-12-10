@@ -39,8 +39,10 @@ pipeline {
   agent none
   stages {
     stage('Test') {
-      hello()
-      hello('ryan')
+      steps {
+        hello()
+        hello('ryan')
+      }
     }
   }
 }
