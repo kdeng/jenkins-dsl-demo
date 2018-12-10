@@ -28,9 +28,19 @@
 //     }
 // }
 
-node {
-  stage('Test') {
-    hello()
-    hello("ryan")
+// node {
+//   stage('Test') {
+//     hello()
+//     hello("ryan")
+//   }
+// }
+
+pipeline {
+  agent none
+  stages {
+    stage('Test') {
+      hello()
+      hello('ryan')
+    }
   }
 }
