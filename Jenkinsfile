@@ -40,11 +40,13 @@
 
 pipeline {
   agent none
-
-  stage('Test') {
-    steps {
-      hello()
-      hello('ryan')
+  stages {
+    stage('Test') {
+      steps {
+        hello()
+        hello('ryan')
+      }
     }
   }
+
 }
