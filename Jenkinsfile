@@ -36,7 +36,7 @@
 // }
 @Library('my-dsl-lib') _
 hello()
-hello('ryan')
+// hello('ryan')
 
 // pipeline {
 //   agent none
