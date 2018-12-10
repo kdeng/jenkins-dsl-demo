@@ -28,5 +28,9 @@
 //     }
 // }
 
-hello()
-hello("ryan")
+node {
+  stage('Test') {
+    hello()
+    hello("ryan")
+  }
+}
